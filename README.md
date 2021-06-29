@@ -75,3 +75,34 @@ fun printSum(a: Int, b: Int) {
   println("sum of $a and #b is ${a + b}")
 }
 ```
+
+## Variables
+읽기만 가능한 지역 변수는 `val`키워드를 이용해서 선언할 수 있습니다. 값을 단 한번만 할당할 수 있다.
+```kotlin
+val a: Int = 1 // 즉시 할당
+val b = 2 // Int 타입 유추
+val c: Int // 초기화가 안될 경우에는 타입이 필요하다.
+c = 3 // 지연 할당? (defeerred assignment)
+```
+
+변수는 값의 재할당이 가능하며 `var` 키워드를 사용한다.
+```kotlin
+var x = 5 // Int 타입 유추
+x += 1
+```
+
+top level에 변수선언도 가능하다.
+```kotlin
+val PI = 3.14
+var x = 0
+
+fun incrementX() {
+  x += 1
+}
+```
+top level은 뭐지?
+> Top level : A top level declaration is a function or property which is defined outside any class, object, interface or other structure.
+
+참고 
+- https://discuss.kotlinlang.org/t/singleton-top-level-declaration-module/7711
+- https://velog.io/@cchloe2311/Kotlin-Kotlin%EC%97%94-static-%ED%82%A4%EC%9B%8C%EB%93%9C%EA%B0%80-%EC%97%86%EB%8B%A4
