@@ -106,3 +106,33 @@ top level은 뭐지?
 참고 
 - https://discuss.kotlinlang.org/t/singleton-top-level-declaration-module/7711
 - https://velog.io/@cchloe2311/Kotlin-Kotlin%EC%97%94-static-%ED%82%A4%EC%9B%8C%EB%93%9C%EA%B0%80-%EC%97%86%EB%8B%A4
+
+## Creating classes and instances
+클래스를 정의하기 위해 `class` 키워드를 사용한다
+```kotlin
+class Shape
+```
+
+클래스의 속성(property) 클래스의 선언부나 바디에 나열할 수 있다.
+```kotlin
+class Rectangle(var height: Double, var length: Double) {
+  var perimeter = (height + length) * 2
+}
+```
+
+클래스 선언에 나열되어있는 파라미터가 있는 기본 생성자는 자동으로 사용가능하다.??
+> The default constructor with parameters listed in the class declaration is available automatically.
+```kotlin
+val rectangle = Rectangle(5.0, 2.0)
+println("The perimeter is ${rectangle.perimeter}")
+```
+
+클래스 사이에 상속은 `colon :` 을 사용한다. 클래스는 기본적으로 final(변경할 수 없는, 불변의) 이며. 상속가능하게 하기 위해서는 `open` 키워드로 표시해야한다.
+
+```kotlin
+open class Shape
+
+class Rectangle(var height: Double, var length: Double): Shape() {
+  var perimeter = (height + length) * 2
+}
+```
