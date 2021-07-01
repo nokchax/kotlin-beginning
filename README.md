@@ -136,3 +136,151 @@ class Rectangle(var height: Double, var length: Double): Shape() {
   var perimeter = (height + length) * 2
 }
 ```
+
+## Comments
+대부분의 최신 언어들과 마찬가지로 한줄, 블락 코멘트를 지원한다.
+```kotlin
+// 한줄 코멘트
+/* 
+  블락 코멘트
+*/
+```
+
+중첩된 코멘트도 지원한다.
+```kotlin
+/* The comment starts here
+/* contains a nested comment */
+and ends here. */
+```
+
+## String template
+```kotlin
+var a = 1
+// simple name in template:
+val s1 = "a is $a" 
+
+a = 2
+// arbitrary expression in template:
+val s2 = "${s1.replace("is", "was")}, but now is $a"
+```
+```
+a was 1, but now is 2
+```
+
+## Conditional expressions
+```kotlin
+fun maxOf(a: Int, b: Int): Int {
+  if (a > b) {
+    return a
+  } else {
+    return b
+  }
+}
+```
+코틀린에서 `if`는 하나의 식으로도 사용된다?
+> In Kotlin, if can also be used as an expression.
+```kotlin
+fun maxOf(a: Int, b: Int) = if (a > b) a else b
+```
+
+## for loop
+```kotlin
+val items = listOf("apple", "banana", "kiwifruit")
+for (item in items) {
+  println(item)
+}
+```
+```
+apple
+banana
+kiwifruit
+```
+혹은
+```kotlin
+val items = listOf("apple", "banana", "kiwifruit")
+for (index in items.indices) {
+   println("item at $index is ${items[index]}")
+}
+```
+```
+item at 0 is apple
+item at 1 is banana
+item at 2 is kiwifruit
+```
+
+## while loop
+```kotlin
+val items = listOf("apple", "banana", "kiwifruit")
+var index = 0
+while (index < items.size) {
+  println("item at $index is ${items[index]}")
+  index++
+}
+```
+```
+item at 0 is apple
+item at 1 is banana
+item at 2 is kiwifruit
+```
+
+## when expression
+```kotlin
+fun describe(obj: Any): String =
+  when (obj) {
+    1          -> "One"
+    "Hello"    -> "Greeting"
+    is Long    -> "Long"
+    !is String -> "Not a string"
+    else       -> "Unknown"
+  }
+```
+
+## Ranges
+```kotlin
+val x = 10
+val y = 9
+if (x in 1..y+1) {
+  println("fits in range")
+}
+```
+```
+fits in range
+```
+
+```kotlin
+val list = listOf("a", "b", "c")
+
+if (-1 !in 0..list.lastIndex) {
+  println("-1 is out of range")
+}
+if (list.size !in list.indices) {
+  println("list size is out of valid list indices range, too")
+}
+```
+list.indices 가 0..2 로 해석되는건가?
+```
+-1 is out of range
+list size is out of valid list indices range, too
+```
+
+```kotlin
+for (x in 1..5) {
+  print(x)
+}
+```
+```
+12345
+```
+```kotlin
+for (x in 1..10 step 2) {
+  print(x)
+}
+println()
+for (x in 9 downTo 0 step 3) {
+  print(x)
+}
+```
+```
+13579
+9630
+```
