@@ -284,3 +284,106 @@ for (x in 9 downTo 0 step 3) {
 13579
 9630
 ```
+
+## Collections
+컬렉션 반복
+```klotlin
+for (item in items) {
+  println(item)
+}
+```
+컬렉션이 객체를 가지고 있는지 확인하려면 `in` 연산자를 사용하면 된다.
+```kotlin
+when {
+  "orange" in items -> println("juicy")
+  "apple" in items -> println("apple is fine too")
+}
+```
+컬렉션을 filter와 map을 하기 위해 람다식을 사용한다.
+```kotlin
+val fruits = listOf("banana", "avocado", "apple", "kiwifruit")
+fruits
+  .filter { it.startsWith("a") }
+  .sortedBy { it }
+  .map { it.uppercase() }
+  .forEach { println(it) }
+```
+```
+APPLE
+AVOCADO
+```
+
+## Nullable values and null checks
+참조형은 값으로 `null`일 가능성이 았다면 명시적으로 nullable이라 표시해줘야 하며, 이때 nullable 타입은 끝에 `?`를 갖는다.
+
+str이 integer값을 가지고 있지 않을경우 null을 리턴
+```kotlin
+fun parseInt(str: String): Int? {
+  // ...
+}
+```
+nullable 값을 반환하는 함수 사용하기
+```kotlin
+fun printProduct(arg1: String, arg2: String) {
+  val x = parseInt(arg1)
+  val y = parseInt(arg2)
+
+  // Using `x * y` yields error because they may hold nulls.
+  if (x != null && y != null) {
+    // x and y are automatically cast to non-nullable after null check
+    println(x * y)
+  }
+  else {
+    println("'$arg1' or '$arg2' is not a number")
+  }    
+}
+```
+혹은
+```kotlin
+// ...
+if (x == null) {
+  println("Wrong number format in arg1: '$arg1'")
+  return
+}
+if (y == null) {
+  println("Wrong number format in arg2: '$arg2'")
+  return
+}
+
+// x and y are automatically cast to non-nullable after null check
+println(x * y)
+```
+
+## Type checks and automatic casts
+`is` 연산자는 식이 타입의 인스턴스인지 아닌지를 체크한다. 만약 불변의 지역 변수나 프로퍼티 특정 타입으로 체크된 이후에는 명시적으로 캐스트할 필요가 없다.
+```kotlin
+fun getStringLength(obj: Any): Int? {
+  if (obj is String) {
+    // `obj` is automatically cast to `String` in this branch
+    return obj.length
+  }
+
+  // `obj` is still of type `Any` outside of the type-checked branch
+  return null
+}
+```
+혹은
+```kotlin
+fun getStringLength(obj: Any): Int? {
+  if (obj !is String) return null
+
+  // `obj` is automatically cast to `String` in this branch
+  return obj.length
+}
+```
+혹은
+```kotlin
+fun getStringLength(obj: Any): Int? {
+  // `obj` is automatically cast to `String` on the right-hand side of `&&`
+  if (obj is String && obj.length > 0) {
+  return obj.length
+  }
+
+  return null
+}
+```
