@@ -134,3 +134,88 @@ val values = ...
 val email = values["email"] ?: throw IllegalsStateException("Eamil is missing!")
 ```
 
+## 비어 있을 가능성이 있는 컬렉션에서 첫번째 아이템 가져오기
+```kotlin
+val emails = ... // 비어있을지도 모름
+val mainEmail = emails.firstOrNull() ?: ""
+```
+
+## null이 아닐경우에 실행하기
+```kotlin
+val value = ...
+value?.let {
+  ... // execute this block if not null
+}
+```
+
+## null일 가능성이 있는 값을 null이 아닐경우 맵핑하기
+```kotlin
+val value = ...
+val mapped = value?.let { transformValue(it) } ? : defaultValue
+// value나 transformValue의 결과가 null인 경우에는 defaultValue가 반환됨
+```
+
+## when 구문에서의 반환
+```kotlin
+fun transform(color: String): Int {
+  return when (color) {
+    "Red" -> 0
+    "Green" -> 1
+    "Blue" -> 2
+    else -> throw IllegalArgumentException("Invalid color param value")
+  }
+}
+```
+
+## try-catch 구문
+```kotlin
+fun test() {
+  val resutl = try {
+    count()
+  } catch (e: ArithmeticException) {
+    throw IllegalStateException(e)
+  }
+  
+  // 결과값으로 나머지 수행
+}
+```
+
+## if 구문
+```kotiln
+fun foo(param: Int) {
+  val result = if (paramm == 1) {
+    "one"
+  } else if (param == 2) {
+    "two"
+  } else {
+    "three"
+  }
+}
+```
+
+## Unit을 반환하는 함수의 Builder-style 사용법
+```kotlin
+fun arrayOfMinusOnes(size: Int): IntArray {
+  return IntArray(size).apply { fill(-1) }
+}
+```
+
+## 단일 식 함수
+```kotlin
+fun theAnswer() = 42
+```
+아래와 동일함
+```kotlin
+fun theAnswer(): Int {
+  return 42
+}
+```
+이러한 방식은 다른 관용구와 효율적으로 조합하여, 더 짧은 코드로 이어질 수 있다. 예를들어 위에서 when 구문과 합치면
+```kotlin
+fun transform(color: String): Int = when (color) {
+  "Red" -> 0
+  "Green" -> 1
+  "Blue" -> 2
+  else -> throw IllegalArgumentException("Invalid color param value")
+}
+```
