@@ -219,3 +219,93 @@ fun transform(color: String): Int = when (color) {
   else -> throw IllegalArgumentException("Invalid color param value")
 }
 ```
+
+## 하나의 인스턴스에서 다수의 함수 호출하기 (with)
+```kotlin
+class Turtle {
+  fun penDown()
+  fun pendUp()
+  fun turn(degrees: Double)
+  fun forward(pixels: Double)
+}
+
+val myTurtle = Turtle()
+with(myTurtle) {
+  pendDown()
+  for (i in 1..4) {
+    forward(100.0)
+    turn(90.0)
+  }
+  penUP()
+}
+```
+잘 이해가 안 돼서 다른 [예제](https://medium.com/@limgyumin/%EC%BD%94%ED%8B%80%EB%A6%B0-%EC%9D%98-apply-with-let-also-run-%EC%9D%80-%EC%96%B8%EC%A0%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94%EA%B0%80-4a517292df29) 참고
+```kotlin
+class Person {
+  var name: String? = null
+  var age: Int? = null
+}
+val person: Person = getPerson()
+print(person.name)
+print(person.age)
+```
+다음 코드는 person의 중복 사용을 제거하기 위해 범위 지정 함수 with 를 사용한다는 점을 제외하고는 위와 동일
+```kotlin
+val person: Person = getPerson()
+with(person) {
+  print(name)
+  print(age)
+}
+```
+
+## 객체의 속성(properties) 설정하기 (apply)
+```kotlin
+val myRectangel = Rectangel().apply {
+  length = 4
+  breadth = 5
+  color = 0xFAFAFA
+}
+```
+이러한 방식은 객체의 생성자에는 보이지 않는 속성을 설정하는데 유용하다.
+
+## Java7에서의 try-with-resource
+```kotlin
+val stream = Files.newInputStream(Paths.get("/some/file.txt"))
+stream.buffered().reader().use { reader -> println(reader.readTest()) }
+```
+
+## 제네릭 타입 정보가 필요한 제네릭 함수
+```kotlin
+// public final class Gson {
+//   ...
+//   public <T> T fromJson(JsonElement json, Class<T> classOfT) throws JsonSyntaxException {
+//   ...
+
+inline fun <reified T: Any> Gson.fromJson(json: JsonElemtns): T = this.fromJson(json, T::class.java)
+```
+
+
+## nullable boolean
+```kotlin
+val b: Boolean? = ...
+if (b == true) {
+  ...
+} else {
+  // b is false or null
+}
+```
+
+## 두 변수 바꾸기
+```kotlin
+var a = 1
+var b = 2
+a = b.also { b = a }
+```
+
+## 코드를 미완성으로 표시하기 (todo)
+코틀린의 표준 라이브러리는 `TODO()` 라는 함수를 표함하고 있다. 이 함수는 `NotImplementedError` 예외를 항상 던진다.
+이 함수의 반환 타입은 `Nothing` 이며 예상되는 유형과는 관계없이 사용가능하다.
+이유 파라미터를 받을수 있는 `overload`가 존재한다.
+```kotlin
+fun calcTaxes(): BigDecimal = TODO("Waiting for feddback from accounting")
+```
