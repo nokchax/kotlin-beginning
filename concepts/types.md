@@ -69,3 +69,25 @@ fun main() {
 숫자 값을 다른 타입으로 변환하려면 [명시적 변환](https://kotlinlang.org/docs/basic-types.html#explicit-conversions)을 사용.
 
 ### 리터럴 상수
+정수 값(integral value 사전에는 적분값이라 정의되어 있는데, 여기서는 [integral number](https://www.quora.com/What-are-integral-numbers) 즉 정수를 뜻하는 듯하다) 에는 아래와 같은 리터럴 상수가 존재한다.
+- 십진법: 123
+- Long 타입은 대문자 `L`이 붙는다: 123L
+- 16진법: 0x0F
+- 2진법: 0b00001011
+> 주의! 8진법은 제공하지 않음
+
+또한 코틀린은 부동 소수점 숫자에 대해 관습적인 표기법을 지원한다.
+- 기본적으로 Double: 123.5, 123.5e10
+- `f`나 `F`가 붙으면 Float: 123.5f
+
+숫자를 더 쉽게 읽기 위해 `_` 언더스코어를 사용할 수 있습니다.
+```kotlin
+val oneMillion = 1_000_000
+val creditCardNumber = 1234_5678_9012_3456L
+val socialSecurityNumber = 999_99_9999L
+val hexBytes = 0xFF_EC_DE_5E
+val bytes = 0b11010010_01101001_10010100_10010010
+```
+
+### JVM상에서의 숫자 표현
+JVM 플랫폼 상에서 숫자는 원시 타입으로 저장된다, `int`, `double` 기타 등등..
