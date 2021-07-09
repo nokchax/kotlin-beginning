@@ -90,4 +90,39 @@ val bytes = 0b11010010_01101001_10010100_10010010
 ```
 
 ### JVM상에서의 숫자 표현
-JVM 플랫폼 상에서 숫자는 원시 타입으로 저장된다, `int`, `double` 기타 등등..
+JVM 플랫폼 상에서 숫자는 원시 타입으로 저장된다, `int`, `double` 기타 등등.. 그러나 `Int?`와 같은 nullable 숫자를 생성하거나 제네릭을 사용하는 경우는 예외다. 이러한 경우에 숫자는 `Integer`, `Double`과 같은 자바 클래스로 감싸진다.
+
+주의! 동일한 숫자에 대한 nullable 참조는 서로 다른 객체일 수 있다.
+```kotlin
+val a: Int = 100
+val boxedA: Int? = a
+val anotherBoxedA: Int? = a
+
+val b: Int = 10000
+val boxedB: Int? = b
+val anotherBoxedB: Int? = b
+
+println(boxedA === anotherBoxedA) // true
+println(boxedB === anotherBoxedB) // false
+```
+`-128` 에서 `127` 사이의 숫자 값에 대해서 JVM은 메모리 최적화를 하기 때문에 `a`에 대한 모든 nullable 참조는 사실상 동일한 객제이다.
+하지만 `b`에 대한 참조는 이 숫자 사이의 값이 아니므로 서로 다른 객체다.
+
+반면에 이 변수들은 여전히 동등하다(equal).
+> 동일성과 동등성
+```kotlin
+val b: Int = 10000
+println(b == b) // Prints 'true'
+val boxedB: Int? = b
+val anotherBoxedB: Int? = b
+println(boxedB == anotherBoxedB) // Prints 'true'
+```
+
+### 명시적 변환
+서로 다른 표현 때문에, 작은 타입은 큰타입의 서브타입이 아니다. 만약 그렇다면 우리는 아래와 같은 문제에 직면한다.
+```kotlin
+// 아래 코드는 가정이므로 실제로 컴파일 되지 않는다.
+val a: Int? = 1 // A boxed Int (java.lang.Integer)
+val b: Long? = a // implicit conversion yields a boxed Long (java.lang.Long)
+print(b == a) // long의 equals()는 값 뿐만 아니라 다른 변수가 Long인지도 확인하므로 false를 출력한다.
+```
