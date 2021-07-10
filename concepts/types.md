@@ -126,3 +126,56 @@ val a: Int? = 1 // A boxed Int (java.lang.Integer)
 val b: Long? = a // implicit conversion yields a boxed Long (java.lang.Long)
 print(b == a) // long의 equals()는 값 뿐만 아니라 다른 변수가 Long인지도 확인하므로 false를 출력한다.
 ```
+따라서 동일성은 물론이고 동등성 마져 없어졌다.
+
+그 결과 작은 타입은 큰 타입으로의 암묵적 변환은 되지않는다. `Byte` 타입의 값을 `Int` 타입의 변수에 할당하기 위해선 명시적인 변환이 필요함을 의미한다.
+```kotlin
+val b: Byte = 1
+// val i: Int = b // ERROR
+val i1: Int = b.toInt()
+```
+
+모든 숫자타입은 다른 타입으로의 변환을 제공한다.
+- toByte(): Byte
+- toShort(): Short
+- toInt(): Int
+- toLong(): Long
+- toFloat(): Float
+- toDouble(): Double
+- toChar(): Char
+
+대부분의 경우에 명시적 변환을 할 필요가 없다. 왜냐하면 타입이 문맥에 의해서 추론되거나, 적절한 변환을 위해 산술 연산이 오버로드 되기 때문이다. 예를들면 아래와 같다
+```kotlin
+val l = 1L + 3 // Long + Int => Long
+```
+
+### 연산
+코틀린은 숫자에 대한 표준적인 산술 연산 집합을 제공한다. `+`, `-`, `*`, `/`, `%`. 이 연산자들은 적절한 클래스의 member로 선언되어 있다.
+```kotlin
+println(1 + 2)
+println(2_500_000_000L - 1L)
+println(3.14 * 2.71)
+println(10.0 / 3)
+```
+또한 이 연산자들을 커스텀 클래스에 대해 재정의 할 수 있다. [operator overloading](https://kotlinlang.org/docs/operator-overloading.html) 참조
+
+#### 정수 나눗셈
+정수 간의 나눗셈은 항상 정수를 반환한다. 모든 소수 부분은 버려진다.
+```kotlin
+val x = 5 / 2
+//println(x == 2.5) // ERROR: Operator '==' cannot be applied to 'Int' and 'Double'
+println(x == 2)
+```
+어떠한 정수 타입간의 나눗셈이라도 마찬가지다.
+```kotlin
+val x = 5L /2
+println(x == 2L)
+```
+부동 소수점 타입으로 반환하기 위해서는 명시적으로 하나의 인수를 부동 소수점 타입으로 변환해야한다.
+```kotlin
+val x = 5 / 2.toDouble()
+println(x == 2.5)
+```
+
+#### 비트연산 (bitwise operations)
+코틀린은 정수에 대해 비트 연산을 제공한다. 
