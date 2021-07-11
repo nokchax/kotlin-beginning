@@ -178,4 +178,15 @@ println(x == 2.5)
 ```
 
 #### 비트연산 (bitwise operations)
-코틀린은 정수에 대해 비트 연산을 제공한다. 
+코틀린은 정수에 대해 비트 연산을 제공한다. 숫자 표현의 비트를 사용하여 이진법의 레벨에서 직접적으로 작동한다. 비트 연산은 삽입 형식으로 불리는 함수를 사용해 표현하다. `Int`와 `Long`에만 적용 가능하다.
+```kotlin
+val x = (1 shl 2) and 0x00FF000
+```
+비트 연산자 종류
+- shl(bits): signed shift left
+- shr(bits): signed shift right
+- ushr(bits): unsigned shift right
+- and(bits): and 연산
+- or(bits): or 연산
+- xor(bits) xor 연산
+- inv(): 비트 
