@@ -190,3 +190,33 @@ val x = (1 shl 2) and 0x00FF000
 - or(bits): or 연산
 - xor(bits) xor 연산
 - inv(): 비트 
+
+### 부동 소수점 숫자의 비교
+이번 섹션에서 다뤄볼 부동 소수점 숫자 연산자는 아래와 같다.
+- 동등성 확인: `a == b` 와 `a != b`
+- 비교 연산: `a < b`, `a > b`, `a <= b`, `a >= b`
+- 범위 인스턴스화와 범위 확인: `a..b`, `x in a..b`, `x !in a..b`
+
+When the operands a and b are statically known to be Float or Double or their nullable counterparts (the type is declared or inferred or is a result of a smart cast ), the operations on the numbers and the range that they form follow the IEEE 754 Standard for Floating-Point Arithmetic.
+
+However, to support generic use cases and provide total ordering, when the operands are not statically typed as floating point numbers (e.g. Any, Comparable<...>, a type parameter), the operations use the equals and compareTo implementations for Float and Double, which disagree with the standard, so that:
+
+피언산자 `a`와 `b`가 변하지 않는 `Float` 나 `Double`인 경우이거나 nullable
+
+그러나, 제네릭을 사용하는 경우나 
+
+연산은 `Float`과 `Double`에 구현된 `equals`와 `compareTo`를 사용하며, 이는 일반적인 `equals`와 `compareTo`와는 다르다. 따라서,
+- `NaN` 은 자신과 동일하다고 간주한다.
+- `NaN` 은 `POSITIVE_INFINITY` 를 포함한 그 어떠한 요소보다 크다고 간주한다.
+- `-0.0`은 `0.0`보다 작다고 간주한다.
+
+### 부호 없는 정수 (Unsigned integer)
+정수 타입에 더해 코틀린은 아래와 같은 부호가 없는 숫자 타입을 제공한다.
+- `UByte`: 부호없는 8-bit 숫자, 범위는 0 ~ 255
+- `UShort`: 부호없는 16-bit 숫자, 범위는 0 ~ 65535
+- `UInt`: 부호없는 32-bit 숫자, 범위는 0 ~ 2^32 - 1
+- `ULong`: 부호없는 64-bit 숫자, 범위는 0 ~ 2^64 - 1
+
+부호 없는 타입은 그 타입에 해당하는 부호 있는 타입의 연산의 대부분을 지원한다.
+> 부호 없는 타입에서 부호 있는 타입으로의 전환이나 그 반대의 경우는 이진 호환되지 않는다.
+
