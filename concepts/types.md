@@ -220,3 +220,41 @@ However, to support generic use cases and provide total ordering, when the opera
 부호 없는 타입은 그 타입에 해당하는 부호 있는 타입의 연산의 대부분을 지원한다.
 > 부호 없는 타입에서 부호 있는 타입으로의 전환이나 그 반대의 경우는 이진 호환되지 않는다.
 
+### Unsigned arrays and ranges
+Unsigned arrays는 아직 베타이기 때문에 스킵
+
+### 리터럴
+부호 없는 정수를 사용하기 쉽게 하기 위해, 코틀린은 정수 리터럴에 특정 부호없는 타입을 지칭하는 접미어 태그 기능을 제공한다. 
+- `u` 와 `U` 태그는 u 부호없는 리터럴. 정확한 타입은 예상 타입에 기반하여 정해진다. 예상 타입이 없다면, 컴파일러는 `UInt` 나 `ULong` 를 사용하며, 리터럴의 크기에 따라 정해진다.
+```kotlin
+val b: UByte = 1u
+val s: UShort = 1u
+val l: ULong = 1u
+
+val a1 = 42u // UInt
+val a2 = 0xFFFF_FFFF_FFFFu // ULong
+```
+- `ul` 과 `UL`는 명시적으로 unsigned long 리터럴 태그다.
+```kotlin
+val a = 1UL
+```
+
+## Booleans
+`Boolean` 타입은 두 값 `true`, `false`를 가질 수 있는 boolean 객체를 표현한다.
+`Boolean` 은 nullable `Boolean?`는 null을 가질 수 있다.
+
+boolean 에 대한 내장된 연산
+- `||`: 논리적 OR
+- `&&`: 논리적 AND
+- `!`: 논리적 NOT
+
+`||` 와 `&&` 는 lazy하게 동작한다.
+```kotlin
+val myTrue: Boolean = true
+val myFalse: Boolean = false
+val boolNull: Boolean? = null
+
+println(myTrue || myFalse)
+println(myTrue && myFalse)
+println(!myTrue)
+```
