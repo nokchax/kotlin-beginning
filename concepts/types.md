@@ -258,3 +258,17 @@ println(myTrue || myFalse)
 println(myTrue && myFalse)
 println(!myTrue)
 ```
+
+## 문자
+문자는 `Char` 타입으로 표현한다. 문자 리터럴은 `'1'` 작은 따옴표로 묶인다.
+
+특별 문자는 이스케이프 역슬래시 `\` 로 시작한다. `\t`, `\b`, `\n`, `\r`, `\'`, `\"`, `\\`, `\$` 와 같은 이스케이프를 지원한다.
+다른 문자를 인코딩하기 위해 유니코드 이스케이프 문법을 사용한다. `\uFF00`
+```kotliln
+val aChar: Char = 'a'
+
+println(aChar)
+println('\n')
+println('\uFF00')
+```
+만약 문자 변수의 값이 숫자라면 `digitToInt()` 함수를 사용하여 `Int` 숫자로 명시젹 변환이 가능하다.
