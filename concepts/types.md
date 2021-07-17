@@ -308,3 +308,47 @@ escaped 문자열의 예
 ```kotlin
 val s = "Hello, world!\n"
 ```
+이스케이프는 `\`를 사용한 전통적인 방법으로 수행된다. 지원되는 이스케이프 시퀀스 리스트는 위를 참조.
+
+raw 문자열은 쌍따옴표 세개 `"""` 내부에 정의된다. 이스케이프 문자열은 포함하지 못하며, newline 과 다른 문자들을 포함할 수 있다.
+```kotlin
+val text = """
+  for (c in "foo")
+    print(c)
+"""
+```
+raw 문자열에서 앞쪽의 공백을 제거하기 위해서는 `trimMargin()` 함수를 사용한다.
+```kotlin
+val text = """
+  |Tell me and I forget.
+  |Teach me and I remember.
+  |Involve me and I learn.
+  |(Benjamin Franklin)
+  """.trimMargin()
+```
+기본적으로 `|`가 마진 접두사로 사용된다. 하지만 `trimMargin(">")`와 같이 다른 문자를 선택하고, 파라미터로 전달하는 방법도 있다.
+
+### 문자열 템플릿
+문자열 리터럴은 템플릿 표현을 포함할 수 있다. 코드의 조각으로 계산되고, 그 결과 문자열에 열결된다. 템플릿 표현은 달러 표시 `$`로 시작하고 변수명으롤 구성된다.
+```kotlin
+val i = 10
+println("i = $i")
+```
+> i = 10
+
+혹은 중괄호 내에 표현
+```kotlin
+val s = "abc"
+println("$s.length is ${s.length}")
+```
+> abc.length is 3
+
+템플릿은 raw 문자열과, escaped 문자열에 사용할 수 있다. raw 문자열에서 식별자(예약어?)의 앞에 허락된 기호(symbol)앞에 `$` 문자를 삽입하기 위해 아래와 같은 문법을 사용한다.
+```kotlin
+val price = """
+${'$'}_9.99
+"""
+```
+
+## 배열
+코틀린에서 배열은 `Array` 클래스로 로 표현한다. `get`, `set` 
