@@ -351,4 +351,23 @@ ${'$'}_9.99
 ```
 
 ## 배열
-코틀린에서 배열은 `Array` 클래스로 로 표현한다. `get`, `set` 
+코틀린에서 배열은 `Array` 클래스로 로 표현한다. 연산자 오버로딩 규칙에 의해 `[]` 로 변하는 `get`, `set` 함수가 있다. 또한 `size` 속성(property)가 있으며 그밖에 유용한 함수가 존재한다.
+
+```kotlin
+class Array<T> private constructor() {
+  val size: Int
+  operator fun get(index: Int): T
+  operator fun set(index: Int, value: T): Unit
+
+  operator fun iterator(): Iterator<T>
+  // ...
+}
+```
+배열을 생성하기 위해서 `arrayOf()` 함수를 사용하며 이 함수에 값을 전달한다. `arrayOf(1, 2, 3)` 은 배열 `[1, 2, 3]`을 생성한다. 또는 `arrayOfNulls()` 함수는 주어진 사이즈를 `null` 요소로 구성한 배열을 반환한다.
+
+배열을 옵션은 배열의 크기와 인덱스의 요소를 반환하기 위한 함수를 가지는 배열 생성자를 이용하는 것이다.
+```kotlin
+val asc = Array(5) { i -> (i * i).toString() }
+asc.forEach { println(it) }
+```
+위에서 말했듯이 `[]` 연산자는 멤버 함수 `get()`과 `set()` 호출을 나타낸다.
