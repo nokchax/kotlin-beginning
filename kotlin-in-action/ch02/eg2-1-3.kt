@@ -12,7 +12,7 @@ fun main() {
     val answer3: Int //초기화 식이 없다면, 타입추론이 불가함 -> 타입이 반드시 필요
     answer3 = 42
 
-    val unmodifiableValue = 10;
+    val unmodifiableValue = 10
     var modifiable = 5
 
     modifiable = 10
