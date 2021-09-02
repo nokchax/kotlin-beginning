@@ -1,6 +1,7 @@
 package ch02
 
-fun main(args: Array<String>) { // args 는 생략이 가능
+//fun main(args: Array<String>) {
+fun main() { // args 는 생략이 가능
     println("Hello, world!")
 }
 
