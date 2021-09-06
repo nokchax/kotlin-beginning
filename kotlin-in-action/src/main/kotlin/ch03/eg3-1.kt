@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
  *
  * This can be useful for creating [Map] literals with less noise, for example:
  * @sample samples.collections.Maps.Instantiation.mapFromPairs
-
-    public infix fun <A, B> A.to(that: B): Pair<A, B> = Pair(this, that)
+ *
+ * public infix fun <A, B> A.to(that: B): Pair<A, B> = Pair(this, that)
 */
 
